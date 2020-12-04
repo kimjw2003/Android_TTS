@@ -2,17 +2,18 @@ package com.example.androidtts
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import java.util.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Log.d("Logd", "2nd")
                     //음성 톤
-                    textToSpeech?.setPitch(2.0f)
+                    textToSpeech?.setPitch(1.0f)
                     //읽는 속도
                     textToSpeech?.setSpeechRate(0.6f)
                 }
@@ -70,10 +71,21 @@ class MainActivity : AppCompatActivity() {
                     val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                     textView.text = result!![0]
 
+                    structuredConcurrency()
                     Speech()
                 }
             }
         }
+    }
+
+    private fun structuredConcurrency() = runBlocking {
+        launch {
+            DelayShow()
+        }
+    }
+
+    private suspend fun DelayShow() {
+        delay(2000L)
     }
 
     private fun Speech() {  //TTS
