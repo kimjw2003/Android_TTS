@@ -38,15 +38,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "이 언어는 지원하지 않습니다.", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("Logd", "2nd")
-                    tts_Btn.setEnabled(true)
                     //음성 톤
-                    textToSpeech?.setPitch(0.7f)
+                    textToSpeech?.setPitch(2.0f)
                     //읽는 속도
-                    textToSpeech?.setSpeechRate(0.7f)
+                    textToSpeech?.setSpeechRate(0.6f)
                 }
             }
         }
-        tts_Btn.setOnClickListener { Speech() }
     } //onCreate
 
     private fun speak() {  //STT
@@ -71,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                     //음성데이터를 텍스트뷰에 입력
                     val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                     textView.text = result!![0]
+
+                    Speech()
                 }
             }
         }
